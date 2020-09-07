@@ -1,0 +1,13 @@
+/*
+ * Copyright (c) 2020.
+ */
+
+.aushang {
+    font-size: 17.0pt;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    mso-font-charset: 0;
+    background: lime;
+    mso-pattern: black none;
+    white-space: normal;
+}

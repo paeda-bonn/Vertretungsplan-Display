@@ -1,0 +1,97 @@
+/*
+ * Copyright (c) 2020.
+ */
+
+
+table.title {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    background-color: lightblue;
+    font-size: 40px;
+    font-weight: 400;
+}
+
+table.title td {
+    padding-left: 20px;
+    text-align: left;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-width: 1pt;
+    border-style: solid;
+    border-color: lightgray;
+}
+
+table.plan {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table.plan tr.vertretungen {
+    background-color: white;
+}
+
+table.plan tr.vertretungen td.tdlehrer {
+    width: 10%;
+    text-align: left;
+    font-weight: bold;
+}
+
+table.plan tr.vertretungen td.tdaktionen {
+    width: 10%;
+    text-align: center;
+}
+
+table.plan tr.vertretungen td.tdinfo {
+    width: 40%;
+    text-align: left;
+}
+
+/* Formatierung aller Zellen */
+table.plan td {
+    text-align: center;
+    border-width: 1pt;
+    border-style: solid;
+    border-color: lightgray;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 20px;
+    font-weight: 200;
+    empty-cells: hide;
+}
+
+/* Formatierung Kopfzeile V-Plan */
+table.plan th {
+    text-align: center;
+    background-color: lightblue;
+    border-width: 1pt;
+    border-style: solid;
+    border-color: lightgray;
+    padding-right: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+table.plan th.thlplanlehrer {
+    text-align: left;
+}
+
+table.plan th.thlplaninfo {
+    text-align: left;
+}
+
+table.aufsicht {
+    color: black;
+    font-family: Helvetica, Arial, Tahoma, sans-serif;
+    font-size: 16px;
+    text-align: left;
+    border-spacing: 0;
+    border: 0;
+}

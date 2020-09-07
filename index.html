@@ -1,0 +1,59 @@
+<!--
+  ~ Copyright (c) 2020.
+  -->
+
+<html lang="de">
+<head>
+    <title>OKS Display</title>
+    <meta charset="UTF-8">
+    <meta content="notranslate" name="google">
+</head>
+<style>
+    html, body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    span {
+        display: inline-flex;
+    }
+</style>
+<body>
+<div id="loadScreen" style="position: center;text-align: center;">
+    <br>
+    <h1>Display</h1><br>
+    Otto-Kühne-Schule<br>
+    <h1>Wird geladen . . .</h1><br>
+    <br>
+    V2.0.1<br>
+    15.06.2020<br>
+    Copyright 2017-2020 -- Nils Witt<br>
+
+</div>
+
+
+<div id="links" style="display: none">
+    <div id="aushang"></div>
+    <div id="klausuren"></div>
+</div>
+<div id="rechts" style="display: none">
+</div>
+<div style="position: absolute; left: 50%; top: 0">
+    <div id="offlineIndicatior">
+        No Connection
+    </div>
+    <input id="keyInput"><br>
+    <button id="saveKey" onclick="setKey()">Save</button>
+</div>
+</body>
+
+<link href="assets/css/display.css" rel="stylesheet" type="text/css">
+<link href="assets/css/vertretungsplan.css" rel="stylesheet" type="text/css">
+<link href="assets/css/klausuren.css" rel="stylesheet" type="text/css">
+<link href="assets/css/aushang.css" rel="stylesheet" type="text/css">
+<script src="assets/js/display.js"></script>
+<script src="assets/js/jsonparse.js"></script>
+
+</html>
