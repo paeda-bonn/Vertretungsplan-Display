@@ -30,7 +30,6 @@ function klausurenGetWeekday(datum) {
 
 function timeDisplay(time) {
     let timestamp = new Date(time).getTime();
-    console.log(timestamp);
     let date = new Date(timestamp);
     let weekday = date.getDay();
     let day = date.getDate();
@@ -42,9 +41,8 @@ function timeDisplay(time) {
 /**
  * @return {string}
  */
-function VplanParse(json) {
+function VplanParse(data) {
     let content = "<!-- -->";
-    let data = JSON.parse(json);
     if (!data.hasOwnProperty("info")) {
         if (!data.info.hasOwnProperty("days")) {
             return "";
@@ -92,17 +90,15 @@ function VplanParse(json) {
     return content;
 }
 
-function AushangParse(json) {
-    let data = JSON.parse(json);
+function AushangParse(data) {
     let content = "";
-    //console.log(data);
     for (let entry in data) {
         if (data.hasOwnProperty(entry)) {
             let aushang = data[entry];
             let spalten = false;
             aushang["Content"] = aushang["Content"].replace(/\n/g, "<br />");
             aushang["Content2"] = aushang["Content2"].replace(/\n/g, "<br />");
-            if (aushang["spalten"] == "true") {
+            if (aushang["spalten"] === "true") {
                 spalten = true;
             }
             if (spalten) {
@@ -125,10 +121,9 @@ function AushangParse(json) {
     return content;
 }
 
-function klausurenParse(json) {
-    let data = JSON.parse(json);
+function klausurenParse(data) {
     let content = "";
-    $i = 0;
+    let i = 0;
     for (let date in data) {
         if (data.hasOwnProperty(date)) {
             let weekday;
@@ -143,7 +138,7 @@ function klausurenParse(json) {
                     }
                 }
             }
-            $k = 0;
+            let k = 0;
             for (let grade in data[date]) {
                 if (data[date].hasOwnProperty(grade)) {
                     for (let entry in data[date][grade]) {
@@ -157,18 +152,18 @@ function klausurenParse(json) {
                             } else if (klausur["Stufe"] === "Q1") {
                                 color = "#0000C0";
                             }
-                            if ($i == 0) {
+                            if (i === 0) {
                                 content = content + '<table border=0 cellpadding="0" cellspacing="0" style="border-collapse:collapse;table-layout:fixed;width:".$width."px"><tr class="xl74" height="24" style="height:18.0pt"><td style="height:18.0pt;width:70pt"></td><td style="width:70pt"></td><td style="width:40pt"></td><td style="width:5pt"></td><td style="width:47pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td></tr>';
                                 content = content + '<tr><td colspan="12" class="xl94" style="height:56.25pt">';
                                 content = content + 'Der Unterricht bei den aufsichtsf&uuml;hrenden Lehrern findet in den jeweiligen Stunden nicht statt';
                                 content = content + '</td></tr>';
-                                $i = 1;
+                                i = 1;
                             }
-                            if ($k == 0) {
+                            if (k === 0) {
                                 content = content + '<tr><td colspan="12" style="border-bottom:2.0pt double windowtext">&nbsp;</td></tr>';
                                 content = content + '<tr style="height:9.0pt"></tr><tr height="24" style="page-break-before:always;height:18.0pt"><td height="24" class="xl68" style="height:18.0pt">' + weekday + '</td><td class="xl70">' + day + '</td><td></td><td></td><td colspan="2" class="xl70">Klausur</td><td></td><td colspan="3" class="xl70">Aufsicht</td></tr>';
                                 content = content + '<tr height="24" style="height:18.0pt"><td height="24" class="xl69" style="height:18.0pt">Std.</td><td class="xl69">Kurs</td><td class="xl71">Lehrer</td><td></td><td class="xl69">Raum</td><td class="xl69">1</td><td class="xl69">2</td><td class="xl69">3</td><td class="xl69">4</td><td class="xl69">5</td><td class="xl69">6</td><td class="xl69">7</td></tr>';
-                                $k = 1;
+                                k = 1;
                             }
                             content = content + '<tr>';
                             content = content + '<td height="24" class="xl78" style="height:18.0pt; color:' + color + '">' + klausur["Std"] + '</td>';
@@ -192,7 +187,7 @@ function klausurenParse(json) {
                             console.log(klausur);
                         }
                     }
-                    content = content + '<tr height="24" style="height:18.0pt"></tr>';
+                    content = content + '<tr style="height:18.0pt"></tr>';
                 }
             }
         }
