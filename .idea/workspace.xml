@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="85134a54-e4ae-43d5-895f-29ce273b7898" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/klausuren.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/klausuren.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Nils Witt &lt;nils@nils-witt.de&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
+  </component>
+  <component name="ProjectId" id="1jhbhKUzbWYs4Fh8pVUChsYzYeN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="85134a54-e4ae-43d5-895f-29ce273b7898" name="Default Changelist" comment="" />
+      <created>1604259388362</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604259388362</updated>
+      <workItem from="1604259389413" duration="112000" />
+      <workItem from="1604344479631" duration="9000" />
+      <workItem from="1604346983821" duration="626000" />
+    </task>
+    <task id="LOCAL-00001" summary="switched to Typescript and scss">
+      <created>1604347403303</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1604347403303</updated>
+    </task>
+    <task id="LOCAL-00002" summary="dev configs">
+      <created>1604347418997</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604347418997</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/assets/js/display.js" />
+        <option value="$PROJECT_DIR$/assets/js/display.js" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="switched to Typescript and scss" />
+    <MESSAGE value="dev configs" />
+    <option name="LAST_COMMIT_MESSAGE" value="dev configs" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="880" y="373" key="#Deployment" timestamp="1604346991615">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state x="880" y="373" key="#Deployment/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604346991615" />
+    <state x="870" y="301" key="CommitChangelistDialog2" timestamp="1604347418022">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state x="870" y="301" key="CommitChangelistDialog2/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604347418022" />
+    <state x="945" y="493" key="EditFileWatcherDialog" timestamp="1604347185783">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state x="945" y="493" key="EditFileWatcherDialog/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604347185783" />
+    <state width="1259" height="393" key="GridCell.Tab.0.bottom" timestamp="1604347500391">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state width="1259" height="393" key="GridCell.Tab.0.bottom/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604347500391" />
+    <state width="1259" height="393" key="GridCell.Tab.0.center" timestamp="1604347500391">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state width="1259" height="393" key="GridCell.Tab.0.center/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604347500391" />
+    <state width="1259" height="393" key="GridCell.Tab.0.left" timestamp="1604347500390">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state width="1259" height="393" key="GridCell.Tab.0.left/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604347500390" />
+    <state width="1259" height="393" key="GridCell.Tab.0.right" timestamp="1604347500391">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state width="1259" height="393" key="GridCell.Tab.0.right/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604347500391" />
+    <state x="789" y="346" key="SettingsEditor" timestamp="1604347130399">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state x="789" y="346" key="SettingsEditor/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604347130399" />
+    <state x="1093" y="628" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604346996102">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state x="1093" y="628" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604346996102" />
+    <state x="1187" y="445" key="ftp.server.browser" timestamp="1604346990998">
+      <screen x="0" y="23" width="2560" height="1369" />
+    </state>
+    <state x="1187" y="445" key="ftp.server.browser/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604346990998" />
+  </component>
+</project>
