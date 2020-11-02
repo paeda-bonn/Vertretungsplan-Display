@@ -25,27 +25,27 @@
     <br>
     <h1>Display</h1><br>
     Otto-Kühne-Schule<br>
-    <h1>Wird geladen . . .</h1><br>
+    <h1 id="loadingStatus">Wird initialisiert . . .</h1><br>
+    <input id="keyInput"><br>
+    <button id="saveKey" onclick="setKey()">Save</button>
     <br>
-    V2.0.1<br>
-    15.06.2020<br>
+    V3.0.0<br>
+    02.11.2020<br>
     Copyright 2017-2020 -- Nils Witt<br>
 
 </div>
 
 
-<div id="links" style="display: none">
+<div id="links">
     <div id="aushang"></div>
     <div id="klausuren"></div>
 </div>
-<div id="rechts" style="display: none">
+<div id="rechts">
 </div>
 <div style="position: absolute; left: 50%; top: 0">
     <div id="offlineIndicatior">
-        No Connection
+        Keine Verbindung - Offline Daten
     </div>
-    <input id="keyInput"><br>
-    <button id="saveKey" onclick="setKey()">Save</button>
 </div>
 </body>
 
@@ -54,6 +54,6 @@
 <link href="assets/css/klausuren.css" rel="stylesheet" type="text/css">
 <link href="assets/css/aushang.css" rel="stylesheet" type="text/css">
 <script src="assets/js/display.js"></script>
-<script src="assets/js/jsonparse.js"></script>
-
+<script src="assets/js/parser.js"></script>
+<script src="assets/js/ServiceWorkerConnector.js"></script>
 </html>
