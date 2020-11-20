@@ -47,7 +47,45 @@
     <div id="aushang"></div>
     <div id="klausuren"></div>
 </div>
-<div id="rechts">
+
+<div id="rechts"></div>
+
+<div id="presetHolder" style="display: none">
+    <table class="plan" id="vplanTemplate">
+        <tr>
+            <th class="hlplanlehrer&quot;">Lehrer/in</th>
+            <th class="thlplanstunde">Std.</th>
+            <th class="thlplanklasse">Klasse</th>
+            <th class="thlplanfach">Fach</th>
+            <th class="thlplanvfach">Fach neu</th>
+            <th class="thlplanvlehrer">Vert.</th>
+            <th class="thlplanvraum">Raum neu</th>
+            <th class="thlplaninfo">Bemerkung</th>
+        </tr>
+        <tbody>
+        <tr class="vertretungen" id="vplanRowTemplate">
+            <td class="tdaktionen teacher"><strong></strong></td>
+            <td class="tdaktionen lesson"></td>
+            <td class="tdaktionen course"></td>
+            <td class="tdaktionen subject"></td>
+            <td class="tdaktionen newSubject"></td>
+            <td class="tdaktionen newTeacher"></td>
+            <td class="tdaktionen newRoom"></td>
+            <td class="tdinfo info"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div id="aufsichtenTemplate">
+        <span class="aufsichtenkopf">Ge&auml;nderte Aufsichten:</span>
+        <table>
+            <tr id="aufsichtRowTemplate">
+                <td class="aufsicht"> ' + aufsicht['Zeit'] + ': ' + aufsicht['Ort'] + ' --> ' +
+                    aufsicht['Lehrer'] + '
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div style="position: absolute; left: 50%; top: 0">
     <div id="offlineIndicatior">

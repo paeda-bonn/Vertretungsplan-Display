@@ -49,52 +49,91 @@ function timeDisplay(time) {
  * @return {string}
  */
 function VplanParse(data) {
-    let content = "<!-- -->";
+    let container = document.createElement('div');
+
     if (!data.hasOwnProperty("info")) {
         if (!data.info.hasOwnProperty("days")) {
-            return "";
+            return container;
         }
     }
-    for (let day in data.info["days"]) {
-        if (data.info["days"].hasOwnProperty(day)) {
-            day = data.info["days"][day];
+
+    for (let dayKey in data.info["days"]) {
+        if (data.info["days"].hasOwnProperty(dayKey)) {
+            let day = data.info["days"][dayKey];
             if (data.data["vertretungen"].hasOwnProperty(day)) {
                 let prevTeacher = "";
-                content = content + '<table class="title"><tr><td>' + timeDisplay(data.data["vertretungen"][day][0]["Datum"]) + '<br/></td></tr></table>';
-                content = content + '<table border="2" class="plan">';
-                content = content + '<tr><th class="hlplanlehrer&quot;">Lehrer/in</th><th class="thlplanstunde">Std.</th><th class="thlplanklasse">Klasse</th><th class="thlplanfach">Fach</th><th class="thlplanvfach">Fach neu</th><th class="thlplanvlehrer">Vert.</th><th class="thlplanvraum">Raum neu</th><th class="thlplaninfo">Bemerkung</th></tr>';
+                container.append(createDayHeader(data.data["vertretungen"][day][0]["Datum"]));
+                let table = <HTMLTableElement>document.getElementById('vplanTemplate').cloneNode(true)
+                container.append(table);
+
+                let tableBody = <HTMLTableSectionElement>table.getElementsByTagName('tbody').item(1);
+                tableBody.innerHTML = "";
+
+                let rowTemplate = <HTMLTableRowElement>document.getElementById('vplanRowTemplate');
+
                 for (let entry in data.data["vertretungen"][day]) {
                     let vertretung;
                     if (data.data["vertretungen"][day].hasOwnProperty(entry)) {
                         vertretung = data.data["vertretungen"][day][entry];
                         let teacher = "";
-                        let element;
+
                         if (vertretung["Lehrer"] !== prevTeacher) {
                             teacher = vertretung["Lehrer"];
                             prevTeacher = vertretung["Lehrer"];
                         }
-                        element = '<tr class="vertretungen"><td class="tdaktionen"><strong>' + teacher + '</strong></td><td class="tdaktionen">' + vertretung["Stunde"] + '</td><td class="tdaktionen">' + vertretung["Kurs"] + '</td><td class="tdaktionen">' + vertretung["Fach"] + '</td><td class="tdaktionen">' + vertretung["FachNew"] + '</td><td class="tdaktionen">' + vertretung["LehrerNeu"] + '</td><td class="tdaktionen">' + vertretung["RaumNew"] + '</td><td class="tdinfo">' + vertretung["info"] + '</td></tr>';
-                        content = content + element;
+                        let row = <HTMLTableRowElement>rowTemplate.cloneNode(true);
+
+                        //TODO make bold
+                        row.getElementsByClassName("teacher").item(0).innerHTML = teacher;
+                        row.getElementsByClassName("lesson").item(0).innerHTML = vertretung["Stunde"];
+                        row.getElementsByClassName("course").item(0).innerHTML = vertretung["Kurs"];
+                        row.getElementsByClassName("subject").item(0).innerHTML = vertretung["Fach"];
+                        row.getElementsByClassName("newSubject").item(0).innerHTML = vertretung["FachNew"];
+                        row.getElementsByClassName("newTeacher").item(0).innerHTML = vertretung["LehrerNeu"];
+                        row.getElementsByClassName("newTeacher").item(0).innerHTML = vertretung["LehrerNeu"];
+                        row.getElementsByClassName("newRoom").item(0).innerHTML = vertretung["RaumNew"];
+                        row.getElementsByClassName("info").item(0).innerHTML = vertretung["info"];
+
+                        tableBody.append(row);
                     }
                 }
-                content = content + "</table>"
             }
+
             if (data.data["aufsichten"].hasOwnProperty(day)) {
-                //console.log(data.data.aufsichten[day])
-                content = content + '<span class="aufsichtenkopf">Ge&auml;nderte Aufsichten:</span><table>';
+                let aContainer = <HTMLDivElement>document.getElementById('aufsichtenTemplate').cloneNode(true);
+                container.append(aContainer);
+
+                aContainer.getElementsByTagName('table').item(0).innerHTML = "";
+                let row = <HTMLTableRowElement>document.getElementById('aufsichtRowTemplate').cloneNode(true);
+                aContainer.append(row);
+
                 for (let entry in data.data["aufsichten"][day]) {
                     if (data.data["aufsichten"][day].hasOwnProperty(entry)) {
                         let aufsicht = data.data["aufsichten"][day][entry];
-                        content = content + '<tr><td class="aufsicht"> ' + aufsicht['Zeit'] + ': ' + aufsicht['Ort'] + ' --> ' + aufsicht['Lehrer'] + '</td></tr>'
+                        row.getElementsByTagName('td').item(0).innerText = aufsicht['Zeit'] + ': ' + aufsicht['Ort'] + ' --> ' + aufsicht['Lehrer'];
                     }
                 }
-                content = content + '</table>';
             }
-            content = content + '</br>';
         }
     }
-    content = content + "Letzte Aktualisierung:" + data.info["refreshed"];
-    return content;
+
+    let refreshedIndicator = document.createElement("span");
+    refreshedIndicator.innerText = "Letzte Aktualisierung:" + data.info["refreshed"];
+
+    return container;
+}
+
+function createDayHeader(date) {
+
+    let table = document.createElement('table');
+    table.className = "title";
+    let row = document.createElement('tr');
+    table.append(row);
+    let column = document.createElement('td');
+    row.append(column);
+    column.innerText = timeDisplay(date);
+
+    return table
 }
 
 function AushangParse(data) {
