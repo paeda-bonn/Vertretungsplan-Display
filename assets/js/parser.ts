@@ -136,35 +136,31 @@ function createDayHeader(date) {
     return table
 }
 
-function AushangParse(data) {
-    let content = "";
+function AushangParse(data): HTMLDivElement {
+    let container = document.createElement('div');
+
     for (let entry in data) {
         if (data.hasOwnProperty(entry)) {
             let aushang = data[entry];
-            let spalten = false;
-            aushang["Content"] = aushang["Content"].replace(/\n/g, "<br />");
-            aushang["Content2"] = aushang["Content2"].replace(/\n/g, "<br />");
+
+            let row = <HTMLTableElement> document.getElementById('aushangTableRowTemplate').cloneNode(true);
+            container.append(row);
+            let contentColumn = <HTMLTableCellElement> row.getElementsByClassName('aushang').item(0);
+            contentColumn.style.backgroundColor = aushang["Color"];
+            contentColumn.innerText = aushang["Content"];
+
             if (aushang["spalten"] === "true") {
-                spalten = true;
-            }
-            if (spalten) {
-                content = content + '<table border=0 cellpadding=0 cellspacing=0 width=783 style="border-collapse:collapse;table-layout:fixed;width:100%">';
-                content = content + '<col width=783 style="mso-width-source:userset;mso-width-alt:28634;width:50%">';
-                content = content + '<col width=783 style="mso-width-source:userset;mso-width-alt:28634;width:50%">';
-                content = content + '<tr height=24 style="height:18.0pt">';
-                content = content + '<td colspan=1 height=24 class="aushang" style=background-color:' + aushang["Color"] + '; width=200 style="height:18.0pt;width:200pt">' + aushang["Content"];
-                content = content + '<td colspan=1 height=24 class="aushang" style=background-color:' + aushang["Color"] + '; width=200 style="height:18.0pt;width:200pt">' + aushang["Content2"];
-                content = content + '</td></tr></table>';
-            } else {
-                content = content + '<table border=0 cellpadding=0 cellspacing=0 width=783 style="border-collapse:collapse;table-layout:fixed;width:100%"><col width=783 style="mso-width-source:userset;mso-width-alt:28634;width:100%">';
-                content = content + '<tr height=24 style="height:18.0pt">';
-                content = content + '<td colspan=1 height=24 class="aushang" style=background-color:' + aushang["Color"] + '; width=200 style="height:18.0pt;width:200pt">' + aushang["Content"];
-                content = content + '</td></tr></table>';
+                contentColumn.colSpan = 1
+
+                let contentColumnTwo = <HTMLTableCellElement> contentColumn.cloneNode(true);
+                row.append(contentColumnTwo);
+
+                contentColumnTwo.innerText = aushang["Content2"];
+                contentColumnTwo.colSpan = 1
             }
         }
-
     }
-    return content;
+    return container;
 }
 
 function klausurenParse(data) {

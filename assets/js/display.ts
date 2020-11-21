@@ -120,7 +120,7 @@ async function loadDataAushang() {
 
         if (res.status === 200) {
             document.getElementById("offlineIndicatior").style.visibility = "hidden";
-            document.getElementById("aushang").innerHTML = AushangParse(await res.json());
+            document.getElementById("aushangTableBody").innerHTML = AushangParse(await res.json()).innerHTML;
         }
         resolve();
     });

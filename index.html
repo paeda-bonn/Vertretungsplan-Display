@@ -33,9 +33,15 @@
 
 
 <div id="links">
-    <div id="aushang"></div>
+    <div id="aushang">
+        <table id="aushangTable" style="border-collapse:collapse;table-layout:fixed;width:100%">
+            <col width=783 style="mso-width-source:userset;mso-width-alt:28634;width:50%">
+            <col width=783 style="mso-width-source:userset;mso-width-alt:28634;width:50%">
+            <tbody id="aushangTableBody"></tbody>
+        </table>
+    </div>
     <div id="klausuren">
-        <table border=0 cellpadding="0" cellspacing="0" style="border-collapse:collapse;table-layout:fixed;">
+        <table style="border-collapse:collapse;table-layout:fixed;">
             <tr class="xl74" height="24" style="height:18.0pt">
                 <td style="height:18.0pt;width:70pt"></td>
                 <td style="width:70pt"></td>
@@ -156,6 +162,15 @@
         <tr id="gradeSpaceholderTemplate" style="height:18.0pt"></tr>
         </tbody>
     </table>
+    <div id="aushangTemplate">
+        <table id="aushangTableTemplate" style="border-collapse:collapse;table-layout:fixed;width:100%">
+            <tr style="height:18.0pt" id="aushangTableRowTemplate">
+                <td colspan=2 height=24 class="aushang" style="background-color:aqua;height:18.0pt;width:200pt">
+                    Content
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div style="position: absolute; left: 50%; top: 0">
     <div id="offlineIndicatior">
