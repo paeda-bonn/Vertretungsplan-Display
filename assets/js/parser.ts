@@ -168,8 +168,9 @@ function AushangParse(data) {
 }
 
 function klausurenParse(data) {
-    let content = "";
-    let i = 0;
+
+    let container = <HTMLTableSectionElement>document.createElement('tbody');
+
     for (let date in data) {
         if (data.hasOwnProperty(date)) {
             let weekday;
@@ -184,6 +185,7 @@ function klausurenParse(data) {
                     }
                 }
             }
+
             let k = 0;
             for (let grade in data[date]) {
                 if (data[date].hasOwnProperty(grade)) {
@@ -198,45 +200,56 @@ function klausurenParse(data) {
                             } else if (klausur["Stufe"] === "Q1") {
                                 color = "#0000C0";
                             }
-                            if (i === 0) {
-                                content = content + '<table border=0 cellpadding="0" cellspacing="0" style="border-collapse:collapse;table-layout:fixed;width:".$width."px"><tr class="xl74" height="24" style="height:18.0pt"><td style="height:18.0pt;width:70pt"></td><td style="width:70pt"></td><td style="width:40pt"></td><td style="width:5pt"></td><td style="width:47pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td><td style="width:30pt"></td></tr>';
-                                content = content + '<tr><td colspan="12" class="xl94" style="height:56.25pt">';
-                                content = content + 'Der Unterricht bei den aufsichtsf&uuml;hrenden Lehrern findet in den jeweiligen Stunden nicht statt';
-                                content = content + '</td></tr>';
-                                i = 1;
-                            }
+
                             if (k === 0) {
-                                content = content + '<tr><td colspan="12" style="border-bottom:2.0pt double windowtext">&nbsp;</td></tr>';
-                                content = content + '<tr style="height:9.0pt"></tr><tr height="24" style="page-break-before:always;height:18.0pt"><td height="24" class="xl68" style="height:18.0pt">' + weekday + '</td><td class="xl70">' + day + '</td><td></td><td></td><td colspan="2" class="xl70">Klausur</td><td></td><td colspan="3" class="xl70">Aufsicht</td></tr>';
-                                content = content + '<tr height="24" style="height:18.0pt"><td height="24" class="xl69" style="height:18.0pt">Std.</td><td class="xl69">Kurs</td><td class="xl71">Lehrer</td><td></td><td class="xl69">Raum</td><td class="xl69">1</td><td class="xl69">2</td><td class="xl69">3</td><td class="xl69">4</td><td class="xl69">5</td><td class="xl69">6</td><td class="xl69">7</td></tr>';
+                                let dayHeader = <HTMLTableSectionElement>document.getElementById('klausurenDayHeaderTemplate').cloneNode(true);
+                                container.append(dayHeader)
+
+                                dayHeader.getElementsByClassName('weekday').item(0).innerHTML = weekday;
+                                dayHeader.getElementsByClassName('date').item(0).innerHTML = day;
                                 k = 1;
                             }
-                            content = content + '<tr>';
-                            content = content + '<td height="24" class="xl78" style="height:18.0pt; color:' + color + '">' + klausur["Std"] + '</td>';
-                            if (klausur["Stufe"] == null) {
-                                content = content + '<td class="xl78" style="color:' + color + '">' + klausur["Kurs"] + '</td>';
-                            } else {
-                                content = content + '<td class="xl78" style="color:' + color + '">' + klausur["Stufe"] + ' / ' + klausur["Kurs"] + '</td>';
-                            }
 
-                            content = content + '<td class="xl78" style="color:' + color + '">' + klausur["Lehrer"] + '</td>';
-                            content = content + '<td class="xl72"></td>';
-                            content = content + '<td class="xl74">' + klausur["Raum"] + '</td>';
-                            content = content + '<td class="xl74">' + klausur["1"] + '</td>';
-                            content = content + '<td class="xl74">' + klausur["2"] + '</td>';
-                            content = content + '<td class="xl74">' + klausur["3"] + '</td>';
-                            content = content + '<td class="xl74">' + klausur["4"] + '</td>';
-                            content = content + '<td class="xl74">' + klausur["5"] + '</td>';
-                            content = content + '<td class="xl74">' + klausur["6"] + '</td>';
-                            content = content + '<td class="xl74">' + klausur["7"] + '</td>';
-                            content = content + '</tr>';
-                            console.log(klausur);
+                            let eventRow = <HTMLTableRowElement>document.getElementById('klausurenRowTamplate').cloneNode(true);
+                            container.appendChild(eventRow);
+
+                            let timeFrameTd = <HTMLTableRowElement>eventRow.getElementsByClassName("timeframe").item(0);
+                            let courseTd = <HTMLTableRowElement>eventRow.getElementsByClassName("course").item(0);
+                            let teacherTd = <HTMLTableRowElement>eventRow.getElementsByClassName("teacher").item(0);
+                            let roomTd = <HTMLTableRowElement>eventRow.getElementsByClassName("room").item(0);
+                            let r1Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r1").item(0);
+                            let r2Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r2").item(0);
+                            let r3Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r3").item(0);
+                            let r4Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r4").item(0);
+                            let r5Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r5").item(0);
+                            let r6Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r6").item(0);
+                            let r7Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r7").item(0);
+
+                            timeFrameTd.style.color = color;
+                            courseTd.style.color = color;
+                            teacherTd.style.color = color;
+
+                            timeFrameTd.innerText = klausur["Std"];
+                            teacherTd.innerHTML = klausur["Lehrer"];
+                            roomTd.innerHTML = klausur["Raum"];
+                            r1Td.innerHTML = klausur["1"];
+                            r2Td.innerHTML = klausur["2"];
+                            r3Td.innerHTML = klausur["3"];
+                            r4Td.innerHTML = klausur["4"];
+                            r5Td.innerHTML = klausur["5"];
+                            r6Td.innerHTML = klausur["6"];
+                            r7Td.innerHTML = klausur["7"];
+                            if (klausur["Stufe"] == null) {
+                                courseTd.innerText = klausur["Kurs"];
+                            } else {
+                                courseTd.innerText = klausur["Stufe"] + ' / ' + klausur["Kurs"];
+                            }
                         }
                     }
-                    content = content + '<tr style="height:18.0pt"></tr>';
+                    container.append(document.getElementById('gradeSpaceholderTemplate').cloneNode(true));
                 }
             }
         }
     }
-    return content;
+    return container;
 }

@@ -139,7 +139,7 @@ async function loadDataKlausuren() {
 
         if (res.status === 200) {
             document.getElementById("offlineIndicatior").style.visibility = "hidden";
-            document.getElementById("klausuren").innerHTML = klausurenParse(await res.json());
+            document.getElementById('klausurenTableBody').innerHTML = klausurenParse(await res.json()).innerHTML;
         }
         resolve();
     });

@@ -15,18 +15,7 @@
     <meta charset="UTF-8">
     <meta content="notranslate" name="google">
 </head>
-<style>
-    html, body {
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        height: 100%;
-    }
 
-    span {
-        display: inline-flex;
-    }
-</style>
 <body>
 <div id="loadScreen" style="position: center;text-align: center;">
     <br>
@@ -45,7 +34,32 @@
 
 <div id="links">
     <div id="aushang"></div>
-    <div id="klausuren"></div>
+    <div id="klausuren">
+        <table border=0 cellpadding="0" cellspacing="0" style="border-collapse:collapse;table-layout:fixed;">
+            <tr class="xl74" height="24" style="height:18.0pt">
+                <td style="height:18.0pt;width:70pt"></td>
+                <td style="width:70pt"></td>
+                <td style="width:40pt"></td>
+                <td style="width:5pt"></td>
+                <td style="width:47pt"></td>
+                <td style="width:30pt"></td>
+                <td style="width:30pt"></td>
+                <td style="width:30pt"></td>
+                <td style="width:30pt"></td>
+                <td style="width:30pt"></td>
+                <td style="width:30pt"></td>
+                <td style="width:30pt"></td>
+            </tr>
+            <tr>
+                <td colspan="12" class="xl94" style="height:56.25pt">Der Unterricht bei den aufsichtsf&uuml;hrenden
+                    Lehrern findet in den jeweiligen Stunden nicht statt
+                </td>
+            </tr>
+            <tbody id="klausurenTableBody">
+
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div id="rechts"></div>
@@ -86,6 +100,62 @@
             </tr>
         </table>
     </div>
+    <div id="klausrenTemplates">
+        <table>
+
+        </table>
+    </div>
+    <table>
+        <tbody id="klausurenDayHeaderTemplate">
+        <tr style="height:18.0pt"></tr>
+        <tr>
+            <td colspan="12" style="border-bottom:2.0pt double windowtext">&nbsp;</td>
+        </tr>
+        <tr style="height:9.0pt"></tr>
+        <tr height="24" style="page-break-before:always;height:18.0pt">
+            <td height="24" class="xl68 weekday" style="height:18.0pt">Samstag</td>
+            <td class="xl70 date">28.11.2020</td>
+            <td></td>
+            <td></td>
+            <td colspan="2" class="xl70">Klausur</td>
+            <td></td>
+            <td colspan="3" class="xl70">Aufsicht</td>
+        </tr>
+        <tr height="24" style="height:18.0pt">
+            <td height="24" class="xl69" style="height:18.0pt">Std.</td>
+            <td class="xl69">Kurs</td>
+            <td class="xl71">Lehrer</td>
+            <td></td>
+            <td class="xl69">Raum</td>
+            <td class="xl69">1</td>
+            <td class="xl69">2</td>
+            <td class="xl69">3</td>
+            <td class="xl69">4</td>
+            <td class="xl69">5</td>
+            <td class="xl69">6</td>
+            <td class="xl69">7</td>
+        </tr>
+        </tbody>
+
+        <tbody>
+
+        <tr id="klausurenRowTamplate">
+            <td height="24" class="xl78 timeframe" style="height:18.0pt; ">7:50-10:50</td>
+            <td class="xl78 course">Q1 / D-L1</td>
+            <td class="xl78 teacher">smr (19)</td>
+            <td class="xl72"></td>
+            <td class="xl74 room">K</td>
+            <td class="xl74 r1">pet*</td>
+            <td class="xl74 r2">pet*</td>
+            <td class="xl74 r3">pet</td>
+            <td class="xl74 r4">pet</td>
+            <td class="xl74 r5">/</td>
+            <td class="xl74 r6">/</td>
+            <td class="xl74 r7">/</td>
+        </tr>
+        <tr id="gradeSpaceholderTemplate" style="height:18.0pt"></tr>
+        </tbody>
+    </table>
 </div>
 <div style="position: absolute; left: 50%; top: 0">
     <div id="offlineIndicatior">
