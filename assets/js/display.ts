@@ -47,7 +47,7 @@ function scrolldiv(scroll_element) {
 }
 
 async function initConnection() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
         try {
             let res = await fetch("/display/xmlhttp/vertretungsplan.php?key=" + window.localStorage.getItem("key"));
             console.log(res.status)
@@ -89,7 +89,7 @@ async function initConnection() {
 }
 
 async function loadDataVertretungsplan() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
         let res;
         try {
             res = await fetch("/display/xmlhttp/vertretungsplan.php?key=" + window.localStorage.getItem("key"));
@@ -108,7 +108,7 @@ async function loadDataVertretungsplan() {
 }
 
 async function loadDataAushang() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
         let res;
         try {
             res = await fetch("/display/xmlhttp/aushang.php?key=" + window.localStorage.getItem("key"));
@@ -127,7 +127,7 @@ async function loadDataAushang() {
 }
 
 async function loadDataKlausuren() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
         let res;
         try {
             res = await fetch("/display/xmlhttp/klausuren.php?key=" + window.localStorage.getItem("key"));
@@ -147,7 +147,7 @@ async function loadDataKlausuren() {
 }
 
 function setKey() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
         document.getElementById("keyInput").style.visibility = "hidden";
         document.getElementById("saveKey").style.visibility = "hidden";
         let keyInput = <HTMLInputElement>document.getElementById("keyInput");
@@ -170,7 +170,7 @@ function setKey() {
 
 //Initial start for all cycle functions
 function start() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
         //first DataLoad
         await loadDataVertretungsplan();
         await loadDataAushang();
