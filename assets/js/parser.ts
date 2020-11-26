@@ -61,7 +61,7 @@ function VplanParse(data) {
         if (data.info["days"].hasOwnProperty(dayKey)) {
             let day = data.info["days"][dayKey];
             if (data.data["vertretungen"].hasOwnProperty(day)) {
-                let prevTeacher = "";
+                let prevCourse = "";
                 container.append(createDayHeader(data.data["vertretungen"][day][0]["Datum"]));
                 let table = <HTMLTableElement>document.getElementById('vplanTemplate').cloneNode(true)
                 container.append(table);
@@ -75,16 +75,15 @@ function VplanParse(data) {
                     let vertretung;
                     if (data.data["vertretungen"][day].hasOwnProperty(entry)) {
                         vertretung = data.data["vertretungen"][day][entry];
-                        let teacher = "";
+                        let course = "";
 
-                        if (vertretung["Lehrer"] !== prevTeacher) {
-                            teacher = vertretung["Lehrer"];
-                            prevTeacher = vertretung["Lehrer"];
+                        if (vertretung["Kurs"] !== prevCourse) {
+                            course = vertretung["Kurs"];
+                            prevCourse = vertretung["Kurs"];
                         }
                         let row = <HTMLTableRowElement>rowTemplate.cloneNode(true);
 
-                        //TODO make bold
-                        row.getElementsByClassName("teacher").item(0).innerHTML = teacher;
+                        //row.getElementsByClassName("teacher").item(0).innerHTML = vertretung["Lehrer"];
                         row.getElementsByClassName("lesson").item(0).innerHTML = vertretung["Stunde"];
                         row.getElementsByClassName("course").item(0).innerHTML = vertretung["Kurs"];
                         row.getElementsByClassName("subject").item(0).innerHTML = vertretung["Fach"];
