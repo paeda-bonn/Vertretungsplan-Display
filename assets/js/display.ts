@@ -50,7 +50,6 @@ async function initConnection() {
     return new Promise<void>(async (resolve, reject) => {
         try {
             let res = await fetch("/display/xmlhttp/vertretungsplan.php?key=" + window.localStorage.getItem("key"));
-            console.log(res.status)
             if (res.status === 200) {
                 await start();
                 setTimeout(() => {
@@ -163,6 +162,7 @@ function setKey() {
             await loadDataKlausuren();
             await loadDataVertretungsplan();
         }, refresh_time);
+        window.location.reload();
         resolve();
     });
 }

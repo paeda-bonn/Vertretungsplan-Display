@@ -45,11 +45,23 @@ function timeDisplay(time) {
     return getWeekday(weekday) + ", " + day + ". " + getMonth(month) + " " + year;
 }
 
+const lessonTimes = {
+    "1": 515,
+    "2": 560,
+    "3": 625,
+    "4": 675,
+    "5": 740,
+    "6": 785,
+    "7": 840,
+}
+
 /**
  * @return {string}
  */
 function VplanParse(data) {
     let container = document.createElement('div');
+    let nowDate = new Date();
+    let todayString = nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1).toString().padStart(2, "0") + "-" + nowDate.getDate().toString().padStart(2, "0");
 
     if (!data.hasOwnProperty("info")) {
         if (!data.info.hasOwnProperty("days")) {
@@ -69,31 +81,48 @@ function VplanParse(data) {
                 let tableBody = <HTMLTableSectionElement>table.getElementsByTagName('tbody').item(1);
                 tableBody.innerHTML = "";
 
+                data.data["vertretungen"][day].sort(function (e1, e2) {
+                    if (e1["Kurs"] < e2["Kurs"]) {
+                        return -1;
+                    } else if (e1["Kurs"] > e2["Kurs"]) {
+                        return 1;
+                    } else {
+                        if (e1["Stunde"] < e2["Stunde"]) {
+                            return -1;
+                        } else if (e1["Stunde"] > e2["Stunde"]) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                });
+
                 let rowTemplate = <HTMLTableRowElement>document.getElementById('vplanRowTemplate');
 
                 for (let entry in data.data["vertretungen"][day]) {
                     let vertretung;
                     if (data.data["vertretungen"][day].hasOwnProperty(entry)) {
                         vertretung = data.data["vertretungen"][day][entry];
-                        let course = "";
+                        if (todayString != day || lessonTimes[vertretung["Stunde"]] > ((nowDate.getHours() * 60) + nowDate.getMinutes()) || lessonTimes[vertretung["Stunde"]] === undefined) {
+                            let course = "";
+                            if (vertretung["Kurs"] !== prevCourse) {
+                                course = vertretung["Kurs"];
+                                prevCourse = vertretung["Kurs"];
+                            }
+                            let row = <HTMLTableRowElement>rowTemplate.cloneNode(true);
 
-                        if (vertretung["Kurs"] !== prevCourse) {
-                            course = vertretung["Kurs"];
-                            prevCourse = vertretung["Kurs"];
+                            //row.getElementsByClassName("teacher").item(0).innerHTML = vertretung["Lehrer"];
+                            row.getElementsByClassName("lesson").item(0).innerHTML = vertretung["Stunde"];
+                            row.getElementsByClassName("course").item(0).innerHTML = course;
+                            row.getElementsByClassName("subject").item(0).innerHTML = vertretung["Fach"];
+                            row.getElementsByClassName("newSubject").item(0).innerHTML = vertretung["FachNew"];
+                            row.getElementsByClassName("newTeacher").item(0).innerHTML = vertretung["LehrerNeu"];
+                            row.getElementsByClassName("newTeacher").item(0).innerHTML = vertretung["LehrerNeu"];
+                            row.getElementsByClassName("newRoom").item(0).innerHTML = vertretung["RaumNew"];
+                            row.getElementsByClassName("info").item(0).innerHTML = vertretung["info"];
+
+                            tableBody.append(row);
                         }
-                        let row = <HTMLTableRowElement>rowTemplate.cloneNode(true);
-
-                        //row.getElementsByClassName("teacher").item(0).innerHTML = vertretung["Lehrer"];
-                        row.getElementsByClassName("lesson").item(0).innerHTML = vertretung["Stunde"];
-                        row.getElementsByClassName("course").item(0).innerHTML = vertretung["Kurs"];
-                        row.getElementsByClassName("subject").item(0).innerHTML = vertretung["Fach"];
-                        row.getElementsByClassName("newSubject").item(0).innerHTML = vertretung["FachNew"];
-                        row.getElementsByClassName("newTeacher").item(0).innerHTML = vertretung["LehrerNeu"];
-                        row.getElementsByClassName("newTeacher").item(0).innerHTML = vertretung["LehrerNeu"];
-                        row.getElementsByClassName("newRoom").item(0).innerHTML = vertretung["RaumNew"];
-                        row.getElementsByClassName("info").item(0).innerHTML = vertretung["info"];
-
-                        tableBody.append(row);
                     }
                 }
             }
@@ -142,16 +171,16 @@ function AushangParse(data): HTMLDivElement {
         if (data.hasOwnProperty(entry)) {
             let aushang = data[entry];
 
-            let row = <HTMLTableElement> document.getElementById('aushangTableRowTemplate').cloneNode(true);
+            let row = <HTMLTableElement>document.getElementById('aushangTableRowTemplate').cloneNode(true);
             container.append(row);
-            let contentColumn = <HTMLTableCellElement> row.getElementsByClassName('aushang').item(0);
+            let contentColumn = <HTMLTableCellElement>row.getElementsByClassName('aushang').item(0);
             contentColumn.style.backgroundColor = aushang["Color"];
             contentColumn.innerText = aushang["Content"];
 
             if (aushang["spalten"] === "true") {
                 contentColumn.colSpan = 1
 
-                let contentColumnTwo = <HTMLTableCellElement> contentColumn.cloneNode(true);
+                let contentColumnTwo = <HTMLTableCellElement>contentColumn.cloneNode(true);
                 row.append(contentColumnTwo);
 
                 contentColumnTwo.innerText = aushang["Content2"];
