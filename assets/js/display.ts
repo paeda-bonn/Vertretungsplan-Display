@@ -132,14 +132,19 @@ async function loadVplan() {
         if (date != "") {
             let headerContainer = <HTMLDivElement>document.getElementById('vplanHeaderTemplate').cloneNode(true);
             (<HTMLSpanElement>headerContainer.getElementsByClassName('dateContainer').item(0)).innerText = timeDisplay(date);
-            container.append(headerContainer);
+
             let dayContainer = <HTMLDivElement>document.getElementById('vplanTemplate').cloneNode(true);
             dayContainer.id = "Container-" + date;
-            container.append(dayContainer);
 
             let eventsContainer = dayContainer.getElementsByTagName('tbody').item(1);
             eventsContainer.innerHTML = "";
             let events = await ApiConnector.loadVplanByDay(date);
+            if (events.length > 0){
+                container.append(headerContainer);
+                container.append(dayContainer);
+                container.append(document.createElement("br"))
+            }
+
 
             events.sort(function (e1, e2) {
                 if (e1["course"] < e2["course"]) {
