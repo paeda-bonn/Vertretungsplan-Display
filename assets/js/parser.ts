@@ -20,8 +20,7 @@ function getMonth(month) {
 }
 
 function klausurenDatum(datum) {
-    let time = datum.split("-");
-    let date = new Date(time[1] + "." + time[0] + "." + time[2]);
+    let date = new Date(datum);
     let day = date.getDate();
     let month = date.getMonth();
     let year = date.getFullYear();
@@ -167,25 +166,20 @@ function createDayHeader(date) {
 function AushangParse(data): HTMLDivElement {
     let container = document.createElement('div');
 
-    for (let entry in data) {
-        if (data.hasOwnProperty(entry)) {
-            let aushang = data[entry];
+    for (let i = 0; i < data.length; i++) {
+        let dataset = data[i];
 
-            let row = <HTMLTableElement>document.getElementById('aushangTableRowTemplate').cloneNode(true);
-            container.append(row);
-            let contentColumn = <HTMLTableCellElement>row.getElementsByClassName('aushang').item(0);
-            contentColumn.style.backgroundColor = aushang["Color"];
-            contentColumn.innerText = aushang["Content"];
+        let dataRow = <HTMLTableRowElement>document.getElementById('aushangTableRowTemplate').cloneNode(true);
+        container.append(dataRow);
+        let column = <HTMLTableCellElement>dataRow.getElementsByTagName('td').item(0);
+        column.innerText = dataset["content"][0];
+        column.style.backgroundColor = dataset["color"];
 
-            if (aushang["spalten"] === "true") {
-                contentColumn.colSpan = 1
-
-                let contentColumnTwo = <HTMLTableCellElement>contentColumn.cloneNode(true);
-                row.append(contentColumnTwo);
-
-                contentColumnTwo.innerText = aushang["Content2"];
-                contentColumnTwo.colSpan = 1
-            }
+        for (let j = 1; j < dataset["content"].length; j++) {
+            column.colSpan = 1;
+            column = <HTMLTableCellElement>column.cloneNode(true);
+            dataRow.append(column);
+            column.innerText = dataset["content"][j];
         }
     }
     return container;
@@ -195,85 +189,70 @@ function klausurenParse(data) {
 
     let container = <HTMLTableSectionElement>document.createElement('tbody');
 
-    for (let date in data) {
-        if (data.hasOwnProperty(date)) {
-            let weekday;
-            let day;
-            for (let grade in data[date]) {
-                if (data[date].hasOwnProperty(grade)) {
-                    for (let entry in data[date][grade]) {
-                        if (data[date][grade].hasOwnProperty(entry)) {
-                            day = klausurenDatum(data[date][grade][entry]["Datum"]);
-                            weekday = klausurenGetWeekday(data[date][grade][entry]["Datum"]);
-                        }
-                    }
-                }
+    let date = "";
+    let grade = "";
+
+    for (let entry in data) {
+        let exam = data[entry];
+
+        if (exam["date"] != date) {
+            let dayHeader = <HTMLTableSectionElement>document.getElementById('klausurenDayHeaderTemplate').cloneNode(true);
+            container.append(dayHeader)
+            dayHeader.getElementsByClassName('weekday').item(0).innerHTML = getWeekdayByDate(exam["date"]).substr(0, 2);
+            dayHeader.getElementsByClassName('date').item(0).innerHTML = klausurenDatum(exam["date"]);
+            date = exam["date"];
+            grade = exam["grade"];
+        } else if (exam["grade"] != grade) {
+            container.append(document.getElementById('gradeSpaceholderTemplate').cloneNode(true));
+            grade = exam["grade"];
+        }
+
+        let color = "#000000";
+        if (exam["grade"] === "EF") {
+            color = "#C00000";
+        } else if (exam["grade"] === "Q2") {
+            color = "#00B050";
+        } else if (exam["grade"] === "Q1") {
+            color = "#0000C0";
+        }
+
+        let eventRow = <HTMLTableRowElement>document.getElementById('klausurenRowTamplate').cloneNode(true);
+        container.appendChild(eventRow);
+
+        let timeFrameTd = <HTMLTableRowElement>eventRow.getElementsByClassName("timeframe").item(0);
+        let courseTd = <HTMLTableRowElement>eventRow.getElementsByClassName("course").item(0);
+        let teacherTd = <HTMLTableRowElement>eventRow.getElementsByClassName("teacher").item(0);
+        let roomTd = <HTMLTableRowElement>eventRow.getElementsByClassName("room").item(0);
+
+        timeFrameTd.style.color = color;
+        courseTd.style.color = color;
+        teacherTd.style.color = color;
+
+        timeFrameTd.innerText = exam["from"].substr(0, 5) + "-" + exam["to"].substr(0, 5);
+        teacherTd.innerHTML = exam["teacher"];
+        roomTd.innerHTML = exam["room"];
+
+        for (const supervisorsKey in exam["supervisors"]) {
+            try {
+                let column = <HTMLTableRowElement>eventRow.getElementsByClassName("r" + supervisorsKey).item(0);
+                column.innerText = exam["supervisors"][supervisorsKey];
+
+            } catch (e) {
+                console.log(e);
             }
+        }
 
-            let k = 0;
-            for (let grade in data[date]) {
-                if (data[date].hasOwnProperty(grade)) {
-                    for (let entry in data[date][grade]) {
-                        if (data[date][grade].hasOwnProperty(entry)) {
-                            let klausur = data[date][grade][entry];
-                            let color = "#000000";
-                            if (klausur["Stufe"] === "EF") {
-                                color = "#C00000";
-                            } else if (klausur["Stufe"] === "Q2") {
-                                color = "#00B050";
-                            } else if (klausur["Stufe"] === "Q1") {
-                                color = "#0000C0";
-                            }
-
-                            if (k === 0) {
-                                let dayHeader = <HTMLTableSectionElement>document.getElementById('klausurenDayHeaderTemplate').cloneNode(true);
-                                container.append(dayHeader)
-
-                                dayHeader.getElementsByClassName('weekday').item(0).innerHTML = weekday;
-                                dayHeader.getElementsByClassName('date').item(0).innerHTML = day;
-                                k = 1;
-                            }
-
-                            let eventRow = <HTMLTableRowElement>document.getElementById('klausurenRowTamplate').cloneNode(true);
-                            container.appendChild(eventRow);
-
-                            let timeFrameTd = <HTMLTableRowElement>eventRow.getElementsByClassName("timeframe").item(0);
-                            let courseTd = <HTMLTableRowElement>eventRow.getElementsByClassName("course").item(0);
-                            let teacherTd = <HTMLTableRowElement>eventRow.getElementsByClassName("teacher").item(0);
-                            let roomTd = <HTMLTableRowElement>eventRow.getElementsByClassName("room").item(0);
-                            let r1Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r1").item(0);
-                            let r2Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r2").item(0);
-                            let r3Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r3").item(0);
-                            let r4Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r4").item(0);
-                            let r5Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r5").item(0);
-                            let r6Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r6").item(0);
-                            let r7Td = <HTMLTableRowElement>eventRow.getElementsByClassName("r7").item(0);
-
-                            timeFrameTd.style.color = color;
-                            courseTd.style.color = color;
-                            teacherTd.style.color = color;
-
-                            timeFrameTd.innerText = klausur["Std"];
-                            teacherTd.innerHTML = klausur["Lehrer"];
-                            roomTd.innerHTML = klausur["Raum"];
-                            r1Td.innerHTML = klausur["1"];
-                            r2Td.innerHTML = klausur["2"];
-                            r3Td.innerHTML = klausur["3"];
-                            r4Td.innerHTML = klausur["4"];
-                            r5Td.innerHTML = klausur["5"];
-                            r6Td.innerHTML = klausur["6"];
-                            r7Td.innerHTML = klausur["7"];
-                            if (klausur["Stufe"] == null) {
-                                courseTd.innerText = klausur["Kurs"];
-                            } else {
-                                courseTd.innerText = klausur["Stufe"] + ' / ' + klausur["Kurs"];
-                            }
-                        }
-                    }
-                    container.append(document.getElementById('gradeSpaceholderTemplate').cloneNode(true));
-                }
-            }
+        if (exam["grade"] == null) {
+            courseTd.innerText = exam["course"];
+        } else {
+            courseTd.innerText = exam["grade"] + ' / ' + exam["course"];
         }
     }
     return container;
+}
+
+function getWeekdayByDate(datum) {
+    let date = new Date(datum);
+    let weekday = date.getDay();
+    return getWeekday(weekday);
 }

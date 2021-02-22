@@ -48,79 +48,181 @@ function scrolldiv(scroll_element) {
 
 async function initConnection() {
     return new Promise<void>(async (resolve, reject) => {
+        console.log("Phase 2: initialising Data and Layout")
         try {
-            let res = await fetch("/display/xmlhttp/vertretungsplan.php?key=" + window.localStorage.getItem("key"));
-            if (res.status === 200) {
-                await start();
-                setTimeout(() => {
-                    document.getElementById("loadScreen").style.display = "none";
-                    document.getElementById("rechts").style.display = "inherit";
-                    document.getElementById("links").style.display = "inherit";
-                }, 5000)
+            await establishConnection();
+            console.log("Phase 2: Connection established")
 
-                document.getElementById("keyInput").style.visibility = "hidden";
-                document.getElementById("saveKey").style.visibility = "hidden";
-                document.getElementById('loadingStatus').innerText = "Erfolgreich initialisiert";
-            } else if (res.status === 401) {
-                document.getElementById('loadingStatus').innerText = "Error while authentication";
-                document.getElementById("keyInput").style.visibility = "visible";
-                document.getElementById("saveKey").style.visibility = "visible";
-            }
+            await start();
+
+            /**
+             * Switch View
+             */
+            setTimeout(() => {
+                document.getElementById("loadScreen").style.display = "none";
+                document.getElementById("rechts").style.display = "inherit";
+                document.getElementById("links").style.display = "inherit";
+            }, 5000)
 
         } catch (e) {
-            let sec = 30;
 
-            document.getElementById('loadingStatus').innerText = "Can´t contact Server - retrying in 30 sec"
-
-            let intId = setInterval(() => {
-
-                document.getElementById('loadingStatus').innerText = "Can´t contact Server - retrying in " + sec + " sec"
-
-                if (sec === 0) {
-                    clearInterval(intId);
-                    initConnection();
-                }
-                sec--;
-            }, 1000);
         }
         resolve();
     });
 }
 
-async function loadDataVertretungsplan() {
+function establishConnection() {
     return new Promise<void>(async (resolve, reject) => {
-        let res;
-        try {
-            res = await fetch("/display/xmlhttp/vertretungsplan.php?key=" + window.localStorage.getItem("key"));
-            document.getElementById("offlineIndicatior").style.visibility = "hidden";
-        } catch (e) {
-            console.log(e);
-            document.getElementById("offlineIndicatior").style.visibility = "visible";
-        }
 
-        if (res.status === 200) {
-            document.getElementById("offlineIndicatior").style.visibility = "hidden";
-            document.getElementById("rechts").innerHTML = VplanParse(await res.json()).innerHTML;
+        let success: boolean = false;
+        while(!success){
+            try {
+                console.log("Phase 2: try top connect")
+                await ApiConnector.testApiConnection();
+                console.log("Successfully connected")
+                success = true;
+            }catch (e) {
+                if (e === 1) {
+                    console.log("Phase 2: no connection to the API")
+                    let sec = 30;
+
+                    await new Promise<void>(async (resolve, reject) => {
+                        document.getElementById('loadingStatus').innerText = "Can´t contact Server - retrying in 30 sec"
+                        let intId = setInterval(() => {
+                            document.getElementById('loadingStatus').innerText = "Can´t contact Server - retrying in " + sec + " sec"
+                            if (sec === 0) {
+                                clearInterval(intId);
+                                resolve()
+                            }
+                            sec--;
+                        }, 1000);
+                    });
+                } else if (e === 2) {
+                    console.log("Phase 2: auth error")
+                    document.getElementById('loadingStatus').innerText = "Error while authentication";
+                    document.getElementById("keyInput").style.visibility = "visible";
+                    document.getElementById("saveKey").style.visibility = "visible";
+                    reject("Auth error");
+                } else {
+                    console.log(e);
+                }
+            }
         }
+        console.log("Done")
         resolve();
     });
+}
+
+
+async function loadVplan() {
+    //TODO set last refreshed
+    let container: HTMLDivElement = document.createElement("div");
+    let activeDays: string[] = await ApiConnector.loadVplanActiveDays();
+    let nowDate = new Date();
+
+    let todayString = nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1).toString().padStart(2, "0") + "-" + nowDate.getDate().toString().padStart(2, "0")
+    if (!activeDays.includes(todayString) && nowDate.getHours() < 16) {
+        activeDays.push(todayString);
+    }
+    activeDays.sort();
+
+    for (let i = 0; i < activeDays.length; i++) {
+        console.log("Got Date: " + activeDays[i])
+        let date = activeDays[i];
+        if (date != "") {
+            let headerContainer = <HTMLDivElement>document.getElementById('vplanHeaderTemplate').cloneNode(true);
+            (<HTMLSpanElement>headerContainer.getElementsByClassName('dateContainer').item(0)).innerText = timeDisplay(date);
+            container.append(headerContainer);
+            let dayContainer = <HTMLDivElement>document.getElementById('vplanTemplate').cloneNode(true);
+            dayContainer.id = "Container-" + date;
+            container.append(dayContainer);
+
+            let eventsContainer = dayContainer.getElementsByTagName('tbody').item(1);
+            eventsContainer.innerHTML = "";
+            let events = await ApiConnector.loadVplanByDay(date);
+
+            events.sort(function (e1, e2) {
+                if (e1["course"] < e2["course"]) {
+                    return -1;
+                } else if (e1["course"] > e2["course"]) {
+                    return 1;
+                } else {
+                    if (e1["subject"] < e2["subject"]) {
+                        return -1;
+                    } else if (e1["subject"] > e2["subject"]) {
+                        return 1;
+                    } else {
+                        if (e1["lesson"] < e2["lesson"]) {
+                            return -1;
+                        } else if (e1["lesson"] > e2["lesson"]) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+            });
+
+            if (todayString == date) {
+                for (let j = 0; j < events.length; j++) {
+                    let event = events[j];
+                    if (lessonTimes[event["lesson"]] < ((nowDate.getHours() * 60) + nowDate.getMinutes())) {
+                        events.splice(j, 1);
+                        j--;
+                    }
+                }
+            }
+
+            for (let j = 0; j < events.length; j++) {
+                let event = events[j];
+
+                if (events[j + 1] != null) {
+                    let next = events[j + 1];
+                    if (event["date"] == next["date"]) {
+                        if (event["course"] == next["course"]) {
+                            if (event["subject"] == next["subject"]) {
+                                if (event["subjectNew"] == next["subjectNew"]) {
+                                    if (event["teacher"] == next["teacher"]) {
+                                        if (event["teacherNew"] == next["teacherNew"]) {
+                                            if (event["room"] == next["room"]) {
+                                                event["lesson"] = event["lesson"] + " / " + next["lesson"];
+                                                j++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                let row = <HTMLTableRowElement>document.getElementById('vplanRowTemplate').cloneNode(true);
+                eventsContainer.append(row);
+                row.getElementsByClassName("lesson").item(0).innerHTML = event["lesson"];
+                row.getElementsByClassName("course").item(0).innerHTML = event["course"];
+                row.getElementsByClassName("subject").item(0).innerHTML = event["subject"];
+                row.getElementsByClassName("newSubject").item(0).innerHTML = event["subjectNew"];
+                row.getElementsByClassName("newTeacher").item(0).innerHTML = event["teacherNew"];
+                row.getElementsByClassName("newRoom").item(0).innerHTML = event["room"];
+                row.getElementsByClassName("info").item(0).innerHTML = event["info"];
+            }
+        }
+    }
+    document.getElementById('rechts').innerHTML = container.innerHTML;
 }
 
 async function loadDataAushang() {
     return new Promise<void>(async (resolve, reject) => {
         let res;
         try {
-            res = await fetch("/display/xmlhttp/aushang.php?key=" + window.localStorage.getItem("key"));
+            res = await ApiConnector.loadDataAushang();
+            document.getElementById("aushangTableBody").innerHTML = AushangParse(res).innerHTML;
             document.getElementById("offlineIndicatior").style.visibility = "hidden";
         } catch (e) {
             console.log(e);
             document.getElementById("offlineIndicatior").style.visibility = "visible";
         }
 
-        if (res.status === 200) {
-            document.getElementById("offlineIndicatior").style.visibility = "hidden";
-            document.getElementById("aushangTableBody").innerHTML = AushangParse(await res.json()).innerHTML;
-        }
         resolve();
     });
 }
@@ -129,7 +231,9 @@ async function loadDataKlausuren() {
     return new Promise<void>(async (resolve, reject) => {
         let res;
         try {
-            res = await fetch("/display/xmlhttp/klausuren.php?key=" + window.localStorage.getItem("key"));
+            console.log("KL load")
+            res = await ApiConnector.loadDataKlausuren();
+            document.getElementById('klausurenTableBody').innerHTML = klausurenParse(res).innerHTML;
             document.getElementById("offlineIndicatior").style.visibility = "hidden";
         } catch (e) {
             console.log(e);
@@ -138,7 +242,7 @@ async function loadDataKlausuren() {
 
         if (res.status === 200) {
             document.getElementById("offlineIndicatior").style.visibility = "hidden";
-            document.getElementById('klausurenTableBody').innerHTML = klausurenParse(await res.json()).innerHTML;
+
         }
         resolve();
     });
@@ -153,14 +257,14 @@ function setKey() {
         let key = keyInput.value;
         window.localStorage.setItem("key", key);
 
-        await loadDataVertretungsplan();
+        await loadVplan();
         await loadDataAushang();
         await loadDataKlausuren();
 
         intervalId = setInterval(async () => {
             await loadDataAushang();
             await loadDataKlausuren();
-            await loadDataVertretungsplan();
+            await loadVplan();
         }, refresh_time);
         window.location.reload();
         resolve();
@@ -171,8 +275,9 @@ function setKey() {
 //Initial start for all cycle functions
 function start() {
     return new Promise<void>(async (resolve, reject) => {
+
         //first DataLoad
-        await loadDataVertretungsplan();
+        await loadVplan();
         await loadDataAushang();
         await loadDataKlausuren();
 
@@ -184,8 +289,10 @@ function start() {
         intervalId = setInterval(async () => {
             await loadDataAushang();
             await loadDataKlausuren();
-            await loadDataVertretungsplan();
+            await loadVplan();
         }, refresh_time);
+
+
         resolve();
     });
 }
@@ -193,6 +300,7 @@ function start() {
 
 //Wait for Dom ready
 document.addEventListener("DOMContentLoaded", async function (event) {
+    console.log("Phase 1: Dom loaded")
     await initConnection();
 });
 

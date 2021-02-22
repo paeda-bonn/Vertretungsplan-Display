@@ -25,9 +25,9 @@
     <input id="keyInput"><br>
     <button id="saveKey" onclick="setKey()">Save</button>
     <br>
-    V3.0.1<br>
-    26.11.2020<br>
-    Copyright 2017-2020 -- Nils Witt<br>
+    V4.0.0<br>
+    14.02.2021<br>
+    Copyright 2017-2021 -- Nils Witt<br>
 
 </div>
 
@@ -37,7 +37,9 @@
         <table id="aushangTable" style="border-collapse:collapse;table-layout:fixed;width:100%">
             <col width=783 style="mso-width-source:userset;mso-width-alt:28634;width:50%">
             <col width=783 style="mso-width-source:userset;mso-width-alt:28634;width:50%">
-            <tbody id="aushangTableBody"></tbody>
+            <tbody id="aushangTableBody">
+
+            </tbody>
         </table>
     </div>
     <div id="klausuren">
@@ -71,6 +73,11 @@
 <div id="rechts"></div>
 
 <div id="presetHolder" style="display: none">
+    <table class="title" id="vplanHeaderTemplate">
+        <tr>
+            <td class="dateContainer">Test</td>
+        </tr>
+    </table>
     <table class="plan" id="vplanTemplate">
         <tr>
             <th class="thlplanklasse">Klasse</th>
@@ -183,6 +190,8 @@
 <link href="assets/css/vertretungsplan.css" rel="stylesheet" type="text/css">
 <link href="assets/css/klausuren.css" rel="stylesheet" type="text/css">
 <link href="assets/css/aushang.css" rel="stylesheet" type="text/css">
+
+<script src="assets/js/ApiConnector.js"></script>
 <script src="assets/js/display.js"></script>
 <script src="assets/js/parser.js"></script>
 <script src="assets/js/ServiceWorkerConnector.js"></script>

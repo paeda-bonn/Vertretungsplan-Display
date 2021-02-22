@@ -13,13 +13,14 @@ const staticCacheName = 'StaticCache'
 
 const filesToCache = [
     'index.html',
-    'assets/css/aushang.scss',
+    'assets/css/aushang.css',
     'assets/css/display.css',
-    'assets/css/klausuren.scss',
-    'assets/css/vertretungsplan.scss',
+    'assets/css/klausuren.css',
+    'assets/css/vertretungsplan.css',
     'assets/js/display.js',
-    'assets/js/jsonparse.js',
-    'assets/js/swConnector.js'
+    'assets/js/parser.js',
+    'assets/js/ServiceWorkerConnector.js',
+    'assets/js/ApiConnector.js'
 ];
 
 //Event to install and initialise the service worker
