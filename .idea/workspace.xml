@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="85134a54-e4ae-43d5-895f-29ce273b7898" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/klausuren.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/klausuren.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+    <list default="true" id="85134a54-e4ae-43d5-895f-29ce273b7898" name="Default Changelist" comment="dev configs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="ComposerSettings">
     <execution />
@@ -23,6 +25,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
   <component name="ProjectId" id="1jhbhKUzbWYs4Fh8pVUChsYzYeN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -30,12 +35,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="app.teamhub.trackedBranches" value="-70ntuf/master" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
@@ -52,6 +59,7 @@
       <workItem from="1604259389413" duration="112000" />
       <workItem from="1604344479631" duration="9000" />
       <workItem from="1604346983821" duration="626000" />
+      <workItem from="1635604933436" duration="297000" />
     </task>
     <task id="LOCAL-00001" summary="switched to Typescript and scss">
       <created>1604347403303</created>
@@ -76,7 +84,27 @@
       <list>
         <option value="$PROJECT_DIR$/assets/js/display.js" />
         <option value="$PROJECT_DIR$/assets/js/display.js" />
+        <option value="$PROJECT_DIR$/serviceworker.js.map" />
+        <option value="$PROJECT_DIR$/serviceworker.js" />
+        <option value="$PROJECT_DIR$/assets/js/parser.js" />
+        <option value="$PROJECT_DIR$/assets/js/ApiConnector.js.map" />
+        <option value="$PROJECT_DIR$/assets/js/ServiceWorkerConnector.js" />
+        <option value="$PROJECT_DIR$/assets/js/ApiConnector.js" />
+        <option value="$PROJECT_DIR$/assets/js/display.js.map" />
+        <option value="$PROJECT_DIR$/assets/js/ServiceWorkerConnector.js.map" />
+        <option value="$PROJECT_DIR$/assets/js/parser.js.map" />
       </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
@@ -125,5 +153,26 @@
       <screen x="0" y="23" width="2560" height="1369" />
     </state>
     <state x="1187" y="445" key="ftp.server.browser/2560.116.1920.1057/0.23.2560.1369@0.23.2560.1369" timestamp="1604346990998" />
+  </component>
+  <component name="com.vaadin.designer2.intellij.settings.SizePresetsSettingsComponent">
+    <option name="sizePresets">
+      <list>
+        <SizePreset>
+          <option name="caption" value="Phone" />
+          <option name="height" value="568" />
+          <option name="width" value="320" />
+        </SizePreset>
+        <SizePreset>
+          <option name="caption" value="Tablet" />
+          <option name="height" value="1024" />
+          <option name="width" value="768" />
+        </SizePreset>
+        <SizePreset>
+          <option name="caption" value="Desktop" />
+          <option name="height" value="900" />
+          <option name="width" value="1440" />
+        </SizePreset>
+      </list>
+    </option>
   </component>
 </project>
