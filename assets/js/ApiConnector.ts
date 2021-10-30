@@ -20,7 +20,7 @@ function authError() {
 class ApiConnector {
 
     public static testApiConnection(){
-        return new Promise<number>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
                 try {
                     let res = await fetch(api_url + "/aushang", {
                         method: 'POST',
