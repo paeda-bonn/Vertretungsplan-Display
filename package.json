@@ -16,8 +16,9 @@
     "url": "https://github.com/paeda-bonn/vplan-display/issues"
   },
   "scripts": {
-    "build": "npx tsc"
-  }
+    "build": "npx tsc",
+    "test": "echo \"not present\""
+  },
   "homepage": "https://github.com/paeda-bonn/vplan-display#readme",
   "dependencies": {
     "sass": "^1.28.0",
