@@ -22,6 +22,6 @@
   "homepage": "https://github.com/paeda-bonn/vplan-display#readme",
   "dependencies": {
     "sass": "^1.50.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.9.5"
   }
 }
